@@ -1,0 +1,24 @@
+{
+  "name": "employeetracker",
+  "version": "1.0.0",
+  "description": "tracking employee data",
+  "main": "index.js",
+  "dependencies": {
+    "mysql": "2.18.1",
+    "express": "4.17.1",
+    "inquirer": "7.3.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tbsanders5/employeetracker.git"
+  },
+  "author": "Tim Sanders",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tbsanders5/employeetracker/issues"
+  },
+  "homepage": "https://github.com/tbsanders5/employeetracker#readme"
+}
