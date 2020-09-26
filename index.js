@@ -45,6 +45,9 @@ var connection = mysql.createConnection({
                         break;
                     case "Add Employee":
                         addEmployee();
+                        break;
+                    case "Add Department":
+                        addDepartment();
                         break;    
                 }
             });
@@ -119,5 +122,26 @@ var connection = mysql.createConnection({
                 empList();
               }
           );
+      });
+  };
+
+  function addDepartment() {
+      inquirer
+      .prompt({
+          type: "input",
+          message: "Enter the name of the new Department",
+          name: "department"
       })
-  }
+      .then(function(answer) {
+          console.log(answer.department);
+          connection.query("INSERT INTO department SET ?",
+          {
+              name: answer.department,
+          },
+          function(err, res) {
+              if (err) throw err;
+              runProgram();  
+          });
+      });
+  };
+
