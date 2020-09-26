@@ -23,8 +23,8 @@ var connection = mysql.createConnection({
                 message: 'Choose an option',
                 choices: [
                     "View Employees",
-                    "View Employees by Department",
-                    "View Employees by Role",
+                    "View Departments",
+                    "View Roles",
                     "Add Employee",
                     "Add Department",
                     "Add Role",
@@ -37,9 +37,15 @@ var connection = mysql.createConnection({
                     case "View Employees":
                         empList();
                         break;
-                    case "View Employees by Department":
+                    case "View Departments":
                         deptList();
                         break;
+                    case "View Roles":
+                        roleList();
+                        break;
+                    case "Add Employee":
+                        addEmployee();
+                        break;    
                 }
             });
   };
@@ -59,6 +65,59 @@ var connection = mysql.createConnection({
       connection.query("SELECT * from department", function(err, res) {
           if (err) throw err;
           console.table(res);
-          runProgram;
+          runProgram();
       });
   };
+
+  function roleList() {
+      connection.query("SELECT * from roles", function(err, res) {
+          if (err) throw err;
+          console.table(res);
+          runProgram();
+      });
+  };
+
+  function addEmployeeManager (empId, roleId) {
+      connection.query("UPDATE employees SET roles_id = ? WHERE employees_id = ?", [roleId, empId])
+  };
+
+  function addEmployee() {
+      const questions = [
+          {
+              type: "input",
+              message: "Enter employees first name",
+              name: "first_name"   
+          },
+          {
+              type: "input",
+              message: "Enter employees last name",
+              name: "last_name"
+          },
+          {
+              type: "input",
+              message: "Enter employees role ID number",
+              name: "titleId"
+          },
+          {
+              type: "input",
+              message: "Who is the manager of the employee, enter by ID number",
+              name: "managerId"
+          }
+      ];
+      inquirer.prompt(questions).then(function(answer) {
+          connection.query(
+              "INSERT INTO employees SET ?",
+              {
+                  first_name: answer.first_name,
+                  last_name: answer.last_name,
+                  roles_id: answer.titleId,
+                  manager_id: answer.managerId
+              },
+              function(err) {
+                  if (err) throw err;
+                addEmployeeManager(answer.titleId, answer.managerId);
+                empList();
+              }
+          );
+      })
+  }
