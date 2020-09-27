@@ -29,6 +29,7 @@ var connection = mysql.createConnection({
                     "Add Department",
                     "Add Role",
                     "Update Employee Role",
+                    "Update Employees Manager",
                     "exit"
                 ]
             }) 
@@ -54,6 +55,9 @@ var connection = mysql.createConnection({
                         break;
                     case "Update Employee Role":
                         updateEmployeesRole();
+                        break;
+                    case "Update Employees Manager":
+                        updateEmployeesManager();
                         break;    
                     case "exit":
                         connection.end();
@@ -202,7 +206,7 @@ var connection = mysql.createConnection({
             rows.forEach((row) => {
                 let employeeObject = {
                     name: row.NAME,
-                    value: row.id
+                    value: row.employees_id
                 }
                 importEmployeeArray.push(employeeObject);
             });
@@ -246,6 +250,65 @@ var connection = mysql.createConnection({
                         });
                 })
             });
+        });
+    }
+
+    function updateEmployeesManager() {
+        // IMPORT Employee's
+        let importEmployeeArray = [];
+        connection.query(`SELECT employees_id, concat(first_name, ' ', last_name) AS NAME FROM employee_db.employees`, (err,rows) => {
+           if(err) throw err;
+           rows.forEach((row) => {
+            let employeeObject = {
+                name: row.NAME,
+                value: row.employees_id
+            }
+            importEmployeeArray.push(employeeObject);
+           });
+        // IMPORT Manager's
+        let importManagerArray = [{
+            name: "null",
+            value: 0
+        }];
+        connection.query(`SELECT employees_id, concat(first_name, ' ', last_name) AS NAME FROM employee_db.employees`, (err,rows) => {
+           if(err) throw err;
+           rows.forEach((row) => {
+            let managerObject = {
+                name: row.NAME,
+                value: row.employees_id
+            }
+            importManagerArray.push(managerObject);
+           });
+           inquirer
+           .prompt([
+               {
+                   type: "list",
+                   name: "empList",
+                   message: "Select employee to change manager",
+                   choices: importEmployeeArray
+               },
+               {
+                    type: "list",
+                    name: "chooseNewManager",
+                    message: "Select the manager",
+                    choices: importManagerArray
+                }
+           ])
+           .then(answers => {
+            const empList = answers.empList;
+            const chooseNewManager = answers.chooseNewManager;
+             
+                connection.query(
+                    `UPDATE employee_db.employees SET manager_id = "${chooseNewManager}" WHERE employees_id = "${empList}"`,
+                    function(err, res) {
+                        if (err) throw err;
+                        console.log("\n");
+                        console.log("EMPLOYEE MANAGER UPDATED")
+                        runProgram();
+                    });
+                
+            });
+        });
         });
     }
 

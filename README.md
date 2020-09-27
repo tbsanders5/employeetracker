@@ -4,9 +4,9 @@
   
   ## View Program ##
   
-  ![Screenshot of the application being run](./images/screenshot.jpeg)
+  ![Screenshot of the application being run](./images/screenshot.png)
 
-  * [Video Walk-through](https://youtu.be/hoNczFXtBHc)
+  * [Video Walk-through](https://www.youtube.com/watch?v=tgz2HEos6r8)
 
   ## Description ##
 
