@@ -37,7 +37,8 @@
   1. When finished choose exit to leave application
 
   ## Contributors ##
-
+  * [Aaron Platt](https://github.com/aaronkplatt)
+  * [Matthew Rogers](https://github.com/Rogers-Development-Services)
   * [Nancy Lambert-Brown](https://github.com/n-lambert)
   * [Plover Brown](https://github.com/rebgrasshopper)
   * [Nicholas Konzen](https://github.com/NTKonzen)
