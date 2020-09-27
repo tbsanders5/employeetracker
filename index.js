@@ -64,7 +64,11 @@ var connection = mysql.createConnection({
 
   function empList() {
       connection.query(
-        "SELECT employees.employees_id, employees.first_name, employees.last_name, roles.title, department.name AS department, roles.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employees LEFT JOIN roles on employees.roles_id = roles.roles_id LEFT JOIN department on roles.department_id = department.department_id LEFT JOIN employees manager on manager.manager_id = employees.manager_id;",
+        `SELECT e.employees_id, e.first_name, e.last_name, r.title, d.name, r.salary, concat(m.first_name, ' ', m.last_name) AS manager 
+        FROM employee_db.employees AS e 
+        LEFT JOIN employee_db.employees AS m ON e.manager_id = m.employees_id 
+        JOIN employee_db.roles AS r ON e.roles_id = r.roles_id
+        JOIN employee_db.department AS d ON r.department_id = d.department_id;`,
             function(err, res) {
                 if (err) throw err;
                     console.table(res);
@@ -115,7 +119,7 @@ var connection = mysql.createConnection({
           },
           {
               type: "input",
-              message: "Who is the manager of the employee, enter by ID number",
+              message: "Enter employees manager by ID number",
               name: "managerId"
           }
       ];
@@ -173,7 +177,7 @@ var connection = mysql.createConnection({
             type: "input",
             message: "Enter the employees salary",
             name: "salary"
-        }
+        },
     ];
     inquirer.prompt(questions).then(function(answer) {
         connection.query(

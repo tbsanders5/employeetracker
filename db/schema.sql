@@ -46,16 +46,16 @@ CREATE TABLE employees(
 );
 
 INSERT INTO employees (first_name, last_name, roles_id, manager_id)
-VALUES ("Dwight", "Shcrute", 1, 1);
+VALUES ("Dwight", "Shcrute", 1, null);
 INSERT INTO employees (first_name, last_name, roles_id, manager_id)
 VALUES ("Stanley", "Hudson", 2, null);
 INSERT INTO employees (first_name, last_name, roles_id, manager_id)
-VALUES ("Jim", "Halpert", 3, 2);
+VALUES ("Jim", "Halpert", 3, null);
 INSERT INTO employees (first_name, last_name, roles_id, manager_id)
 VALUES ("Pam", "Beasley", 4, null);
 INSERT INTO employees (first_name, last_name, roles_id, manager_id)
 VALUES ("Oscar", "Martinez", 5, null);
 INSERT INTO employees (first_name, last_name, roles_id, manager_id)
-VALUES ("Angela", "Martin", 6, 3);
+VALUES ("Angela", "Martin", 6, null);
 INSERT INTO employees (first_name, last_name, roles_id, manager_id)
 VALUES ("Ryan", "Howard", 7, null);
